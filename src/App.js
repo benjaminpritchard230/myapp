@@ -7,6 +7,10 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import TaskCard from "./components/TaskCard";
+import FloatingActionButtons from './components/FloatingActionButtons';
+import axios from "axios";
+import AddTaskDialog from './components/AddTaskDialog';
+
 
 function App() {
   const lightTheme = createTheme({
@@ -18,12 +22,25 @@ function App() {
   });
 
   const [taskList, setTaskList] = useState([])
+  const [taskDialog, setTaskDialog] = useState(false)
+
+  const token = "78b5ff3cdd9a2472636fe3e679295510ef829916"
 
   useEffect(() => {
-    fetch('http://localhost:8000/tasks/')
-  .then((response) => response.json())
-  .then((data) => setTaskList(data));
-  }, [])
+    axios.get('http://localhost:8000/tasks/', {
+  headers: {
+    'Authorization': `token ${token}`
+  }
+})
+      .then((response) => {
+        console.log(response.data);
+        setTaskList(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {});
+  }, []);
   
 
   const displayTasks = ()=>{
@@ -45,7 +62,8 @@ function App() {
           {displayTasks()}
         </Grid>
       </Box>
-          
+      <FloatingActionButtons taskDialog={taskDialog} setTaskDialog={setTaskDialog}/>
+          <AddTaskDialog taskDialog={taskDialog} setTaskDialog={setTaskDialog}/>
       
     </ThemeProvider>
   );
