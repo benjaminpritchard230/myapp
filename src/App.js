@@ -10,7 +10,7 @@ import TaskCard from "./components/TaskCard";
 import FloatingActionButtons from './components/FloatingActionButtons';
 import axios from "axios";
 import AddTaskDialog from './components/AddTaskDialog';
-
+import LogInModal from './components/LogInModal';
 
 function App() {
   const lightTheme = createTheme({
@@ -23,11 +23,20 @@ function App() {
 
   const [taskList, setTaskList] = useState([])
   const [taskDialog, setTaskDialog] = useState(false)
+  const [logInDialog, setLogInDialog] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
 
-  const token = "78b5ff3cdd9a2472636fe3e679295510ef829916"
+  const [token, setToken] = useState("")
+
+  const [update, setUpdate] = useState(0)
 
   useEffect(() => {
-    axios.get('http://localhost:8000/tasks/', {
+    if(token.length===0){setLogInDialog(true)}
+  }, [update])
+  
+
+  useEffect(() => {
+    if(token.length>0){ axios.get('http://localhost:8000/tasks/', {
   headers: {
     'Authorization': `token ${token}`
   }
@@ -39,8 +48,9 @@ function App() {
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => {});
-  }, []);
+      .finally(() => {});}
+   
+  }, [update]);
   
 
   const displayTasks = ()=>{
@@ -60,10 +70,12 @@ function App() {
             
           </Grid>
           {displayTasks()}
+          
         </Grid>
       </Box>
       <FloatingActionButtons taskDialog={taskDialog} setTaskDialog={setTaskDialog}/>
           <AddTaskDialog taskDialog={taskDialog} setTaskDialog={setTaskDialog}/>
+          <LogInModal token={token} setToken={setToken} update={update} setUpdate={setUpdate} logInDialog={logInDialog} setLogInDialog={setLogInDialog}/>
       
     </ThemeProvider>
   );
