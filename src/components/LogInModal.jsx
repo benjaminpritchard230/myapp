@@ -60,7 +60,7 @@ axios.post("http://localhost:8000/login_api/", {username:username, password:pass
           <DialogActions>
             <Button
               onClick={() => {
-                
+                setLogInDialog(false)
               }}
             >
               Cancel

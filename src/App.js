@@ -11,6 +11,7 @@ import FloatingActionButtons from './components/FloatingActionButtons';
 import axios from "axios";
 import AddTaskDialog from './components/AddTaskDialog';
 import LogInModal from './components/LogInModal';
+import ButtonAppBar from './components/ButtonAppBar';
 
 function App() {
   const lightTheme = createTheme({
@@ -31,7 +32,8 @@ function App() {
   const [update, setUpdate] = useState(0)
 
   useEffect(() => {
-    if(token.length===0){setLogInDialog(true)}
+    if(token.length===0){setLogInDialog(true);
+    setTaskList([])}
   }, [update])
   
 
@@ -44,6 +46,7 @@ function App() {
       .then((response) => {
         console.log(response.data);
         setTaskList(response.data);
+        setUpdate(update+1)
       })
       .catch((error) => {
         console.log(error);
@@ -67,14 +70,14 @@ function App() {
       <Box sx={{ flexGrow: 1, minWidth: 1 }} key="1">
         <Grid container spacing={0}>
           <Grid item xs={12}>
-            
+            <ButtonAppBar token={token} setToken={setToken} update={update} setUpdate={setUpdate}/>
           </Grid>
           {displayTasks()}
           
         </Grid>
       </Box>
       <FloatingActionButtons taskDialog={taskDialog} setTaskDialog={setTaskDialog}/>
-          <AddTaskDialog taskDialog={taskDialog} setTaskDialog={setTaskDialog}/>
+          <AddTaskDialog taskDialog={taskDialog} setTaskDialog={setTaskDialog} update={update} setUpdate={setUpdate}/>
           <LogInModal token={token} setToken={setToken} update={update} setUpdate={setUpdate} logInDialog={logInDialog} setLogInDialog={setLogInDialog}/>
       
     </ThemeProvider>

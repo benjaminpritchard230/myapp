@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
 
-export default function AddTaskDialog({ taskDialog, setTaskDialog }) {
+export default function AddTaskDialog({ taskDialog, setTaskDialog, update, setUpdate }) {
     const addTaskUrl = "http://localhost:8000/tasks/"
     const token = "78b5ff3cdd9a2472636fe3e679295510ef829916"
 
