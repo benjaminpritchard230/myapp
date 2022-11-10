@@ -9,29 +9,40 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
-
-export default function AddTaskDialog({ taskDialog, setTaskDialog, update, setUpdate }) {
-    const addTaskUrl = "http://localhost:8000/tasks/"
-    const token = "78b5ff3cdd9a2472636fe3e679295510ef829916"
+export default function AddTaskDialog({
+  taskDialog,
+  setTaskDialog,
+  update,
+  setUpdate,
+  updateTasks,
+  token,
+}) {
+  const addTaskUrl = "http://localhost:8000/tasks/";
 
   const handleSubmit = (e) => {
-    console.log(e)
+    console.log(e);
     e.preventDefault();
     setTaskDialog(false);
-    let name = e.target[0].value
-    axios.post(addTaskUrl,{name:name, description:"Hello"}, {
-  headers: {
-    'Authorization': `token ${token}`
-  }, 
-})
+    let name = e.target[0].value;
+    axios
+      .post(
+        addTaskUrl,
+        { name: name, description: "Hello" },
+        {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
-        
       })
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => {});
+      .finally(() => {
+        updateTasks();
+      });
   };
   return (
     <div>
