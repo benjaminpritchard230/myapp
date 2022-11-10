@@ -35,24 +35,27 @@ export default function ButtonAppBar({
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {token}
           </Typography>
-          <Button
-            onClick={() => {
-              setToken("");
-              setLogInDialog(true);
-            }}
-            color="inherit"
-          >
-            Login
-          </Button>
-          <Button
-            onClick={() => {
-              setToken("");
-              updateTasks();
-            }}
-            color="inherit"
-          >
-            Logout
-          </Button>
+          {token.length > 0 ? (
+            <Button
+              onClick={() => {
+                setToken("");
+                updateTasks();
+              }}
+              color="inherit"
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setToken("");
+                setLogInDialog(true);
+              }}
+              color="inherit"
+            >
+              Login
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

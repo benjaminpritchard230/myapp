@@ -9,6 +9,10 @@ import axios from "axios";
 import { Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
+import TaskCardButtons from "./TaskCardButtons";
+import EditDialog from "./EditDialog";
+import { useState } from "react";
+
 export default function TaskCard({ task, updateTasks, token }) {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -17,6 +21,8 @@ export default function TaskCard({ task, updateTasks, token }) {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
+
+  const [editDialog, setEditDialog] = useState(false);
 
   const imageUrl = `localhost:8000${task.image}`;
 
@@ -50,25 +56,21 @@ export default function TaskCard({ task, updateTasks, token }) {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button
-              onClick={() => {
-                handleDeleteClick();
-              }}
-              size="small"
-            >
-              Delete
-            </Button>
-            <Button
-              onClick={() => {
-                console.log(imageUrl);
-              }}
-              size="small"
-            >
-              Image url
-            </Button>
+            <TaskCardButtons
+              handleDeleteClick={handleDeleteClick}
+              editDialog={editDialog}
+              setEditDialog={setEditDialog}
+            />
           </CardActions>
         </Card>
       </Item>
+      <EditDialog
+        task={task}
+        editDialog={editDialog}
+        setEditDialog={setEditDialog}
+        token={token}
+        updateTasks={updateTasks}
+      />
     </Grid>
   );
 }
