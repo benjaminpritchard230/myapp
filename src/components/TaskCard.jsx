@@ -24,15 +24,43 @@ export default function TaskCard({ task, updateTasks, token }) {
 
   const [editDialog, setEditDialog] = useState(false);
 
-  const imageUrl = `localhost:8000${task.image}`;
+  const editTaskUrl = `http://localhost:8000/tasks/${task.id}/`;
+  const taskName = task.name;
+  const taskDone = task.done;
+
+  const capitalizeString = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
 
   const handleDeleteClick = () => {
     axios
-      .delete(`http://localhost:8000/tasks/${task.id}`, {
+      .delete(`http://localhost:8000/tasks/${task.id}/`, {
         headers: {
           Authorization: `token ${token}`,
         },
       })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        updateTasks();
+      });
+  };
+
+  const handleDoneClick = () => {
+    axios
+      .put(
+        editTaskUrl,
+        { name: taskName, done: !taskDone },
+        {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
       })
@@ -49,7 +77,7 @@ export default function TaskCard({ task, updateTasks, token }) {
         <Card sx={{ minHeight: 150 }}>
           <CardContent sx={{ minHeight: 150 }}>
             <Typography gutterBottom variant="h5" component="div">
-              {task.name}
+              {capitalizeString(task.name)}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {task.description}
@@ -60,6 +88,8 @@ export default function TaskCard({ task, updateTasks, token }) {
               handleDeleteClick={handleDeleteClick}
               editDialog={editDialog}
               setEditDialog={setEditDialog}
+              task={task}
+              handleDoneClick={handleDoneClick}
             />
           </CardActions>
         </Card>

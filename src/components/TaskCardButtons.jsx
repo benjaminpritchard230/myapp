@@ -11,7 +11,9 @@ const TaskCardButtons = ({
   handleDeleteClick,
   editDialog,
   setEditDialog,
+  handleDoneClick,
 }) => {
+  console.log(task.done);
   return (
     <Stack
       direction="row"
@@ -20,10 +22,13 @@ const TaskCardButtons = ({
       spacing={1}
     >
       <Tooltip title="Done" placement="top">
-        <IconButton onClick={() => {}}>
+        <IconButton
+          onClick={() => {
+            handleDoneClick();
+          }}
+        >
           <Avatar>
-            {/* <DoneIcon color={task.done ? "success" : "default"} /> */}
-            <DoneIcon color="success" />
+            <DoneIcon color={task.done ? "success" : "default"} />
           </Avatar>
         </IconButton>
       </Tooltip>
