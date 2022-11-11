@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
+import CreateUserDialog from "./components/CreateUserDialog";
 
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -26,6 +27,7 @@ function App() {
   const [taskDialog, setTaskDialog] = useState(false);
   const [logInDialog, setLogInDialog] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [createUserDialog, setCreateUserDialog] = useState(true);
 
   const [token, setToken] = useState("");
 
@@ -88,8 +90,11 @@ function App() {
         </Grid>
       </Box>
       <FloatingActionButtons
+        token={token}
         taskDialog={taskDialog}
         setTaskDialog={setTaskDialog}
+        logInDialog={logInDialog}
+        setLogInDialog={setLogInDialog}
       />
       <AddTaskDialog
         taskDialog={taskDialog}
@@ -106,6 +111,10 @@ function App() {
         setUpdate={setUpdate}
         logInDialog={logInDialog}
         setLogInDialog={setLogInDialog}
+      />
+      <CreateUserDialog
+        createUserDialog={createUserDialog}
+        setCreateUserDialog={setCreateUserDialog}
       />
     </ThemeProvider>
   );
