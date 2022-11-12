@@ -11,6 +11,10 @@ export default function FloatingActionButtons({
   setTaskDialog,
   logInDialog,
   setLogInDialog,
+  filterDialog,
+  setFilterDialog,
+  filterText,
+  setFilterText,
 }) {
   const style = {
     margin: 0,
@@ -38,16 +42,31 @@ export default function FloatingActionButtons({
           <AddIcon />
         </Fab>
       </Tooltip>
-      <Tooltip title="Filter tasks">
-        <Fab
-          aria-label="filter"
-          onClick={() => {
-            console.log("clicked");
-          }}
+      {token.length > 0 ? (
+        <Tooltip
+          title={filterText.length > 0 ? "Clear filter" : "Filter tasks"}
         >
-          <FilterAltIcon />
-        </Fab>
-      </Tooltip>
+          {filterText.length > 0 ? (
+            <Fab
+              aria-label="filter"
+              onClick={() => {
+                setFilterText("");
+              }}
+            >
+              <FilterAltOffIcon />
+            </Fab>
+          ) : (
+            <Fab
+              aria-label="filter"
+              onClick={() => {
+                setFilterDialog(true);
+              }}
+            >
+              <FilterAltIcon />
+            </Fab>
+          )}
+        </Tooltip>
+      ) : null}
     </Box>
   );
 }

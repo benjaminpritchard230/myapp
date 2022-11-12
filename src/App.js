@@ -13,6 +13,7 @@ import axios from "axios";
 import AddTaskDialog from "./components/AddTaskDialog";
 import LogInModal from "./components/LogInModal";
 import ButtonAppBar from "./components/ButtonAppBar";
+import FilterDialog from "./components/FilterDialog";
 
 function App() {
   const lightTheme = createTheme({
@@ -29,6 +30,9 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [createUserDialog, setCreateUserDialog] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
+  const [filterDialog, setFilterDialog] = useState(false);
+  const [filterText, setFilterText] = useState("");
+  const [filteredTaskList, setFilteredTaskList] = useState([]);
 
   const [token, setToken] = useState("");
 
@@ -65,8 +69,28 @@ function App() {
     updateTasks();
   }, [token]);
 
+  useEffect(() => {
+    console.log(filterText);
+  }, [filterText]);
+
+  useEffect(() => {
+    const filtered = taskList.filter((task) => {
+      return task.name.toLowerCase().includes(filterText.toLowerCase());
+    });
+    setFilteredTaskList(filtered);
+  }, [filterText, taskList]);
+
   const displayTasks = () => {
-    return taskList.map((task) => (
+    return filteredTaskList.map((task) => (
+      <TaskCard token={token} task={task} updateTasks={updateTasks} />
+    ));
+  };
+
+  const displayFilteredTasks = () => {
+    taskList.filter((task) => {
+      return task.name.toLowerCase().includes(filterText.toLowerCase());
+    });
+    taskList.map((task) => (
       <TaskCard token={token} task={task} updateTasks={updateTasks} />
     ));
   };
@@ -100,6 +124,10 @@ function App() {
         setTaskDialog={setTaskDialog}
         logInDialog={logInDialog}
         setLogInDialog={setLogInDialog}
+        filterDialog={filterDialog}
+        setFilterDialog={setFilterDialog}
+        filterText={filterText}
+        setFilterText={setFilterText}
       />
       <AddTaskDialog
         taskDialog={taskDialog}
@@ -123,6 +151,12 @@ function App() {
         createUserDialog={createUserDialog}
         setCreateUserDialog={setCreateUserDialog}
         updateTasks={updateTasks}
+      />
+      <FilterDialog
+        filterDialog={filterDialog}
+        setFilterDialog={setFilterDialog}
+        filterText={filterText}
+        setFilterText={setFilterText}
       />
     </ThemeProvider>
   );
