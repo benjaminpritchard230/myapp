@@ -17,6 +17,8 @@ export default function LogInModal({
   setUpdate,
   logInDialog,
   setLogInDialog,
+  currentUser,
+  setCurrentUser,
 }) {
   const handleSubmit = (e) => {
     console.log(e);
@@ -37,7 +39,9 @@ export default function LogInModal({
       .catch((error) => {
         console.log(error);
       })
-      .finally(() => {});
+      .finally(() => {
+        setCurrentUser(username);
+      });
   };
 
   return (

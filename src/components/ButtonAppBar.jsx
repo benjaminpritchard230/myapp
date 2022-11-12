@@ -17,6 +17,8 @@ export default function ButtonAppBar({
   updateTasks,
   createUserDialog,
   setCreateUserDialog,
+  currentUser,
+  setCurrentUser,
 }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -35,13 +37,16 @@ export default function ButtonAppBar({
             Todo App
           </Typography>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {token}
+            {currentUser.length > 0
+              ? `Logged in as: ${currentUser}`
+              : "Log in or create a user to get started"}
           </Typography>
           {token.length > 0 ? (
             <Button
               onClick={() => {
                 setToken("");
                 updateTasks();
+                setCurrentUser("");
               }}
               color="inherit"
             >

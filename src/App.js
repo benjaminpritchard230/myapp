@@ -27,7 +27,8 @@ function App() {
   const [taskDialog, setTaskDialog] = useState(false);
   const [logInDialog, setLogInDialog] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [createUserDialog, setCreateUserDialog] = useState(true);
+  const [createUserDialog, setCreateUserDialog] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
 
   const [token, setToken] = useState("");
 
@@ -86,6 +87,8 @@ function App() {
               updateTasks={updateTasks}
               createUserDialog={createUserDialog}
               setCreateUserDialog={setCreateUserDialog}
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
             />
           </Grid>
           {token.length > 0 ? displayTasks() : ""}
@@ -113,6 +116,8 @@ function App() {
         setUpdate={setUpdate}
         logInDialog={logInDialog}
         setLogInDialog={setLogInDialog}
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
       />
       <CreateUserDialog
         createUserDialog={createUserDialog}
