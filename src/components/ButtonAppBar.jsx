@@ -15,6 +15,8 @@ export default function ButtonAppBar({
   logInDialog,
   setLogInDialog,
   updateTasks,
+  createUserDialog,
+  setCreateUserDialog,
 }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -54,6 +56,18 @@ export default function ButtonAppBar({
               color="inherit"
             >
               Login
+            </Button>
+          )}
+          {token.length > 0 ? (
+            ""
+          ) : (
+            <Button
+              onClick={() => {
+                setCreateUserDialog(true);
+              }}
+              color="inherit"
+            >
+              Create user
             </Button>
           )}
         </Toolbar>

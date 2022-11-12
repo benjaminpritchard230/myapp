@@ -12,10 +12,26 @@ import axios from "axios";
 export default function CreateUserDialog({
   createUserDialog,
   setCreateUserDialog,
+  updateTasks,
 }) {
+  const createUserUrl = "http://localhost:8000/register/";
   const handleSubmit = (e) => {
     console.log(e);
     e.preventDefault();
+    let username = e.target[0].value;
+    let password = e.target[1].value;
+    axios
+      .post(createUserUrl, { username: username, password: password })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        updateTasks();
+        setCreateUserDialog(false);
+      });
   };
   return (
     <div>

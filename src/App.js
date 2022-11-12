@@ -84,6 +84,8 @@ function App() {
               logInDialog={logInDialog}
               setLogInDialog={setLogInDialog}
               updateTasks={updateTasks}
+              createUserDialog={createUserDialog}
+              setCreateUserDialog={setCreateUserDialog}
             />
           </Grid>
           {token.length > 0 ? displayTasks() : ""}
@@ -115,6 +117,7 @@ function App() {
       <CreateUserDialog
         createUserDialog={createUserDialog}
         setCreateUserDialog={setCreateUserDialog}
+        updateTasks={updateTasks}
       />
     </ThemeProvider>
   );
