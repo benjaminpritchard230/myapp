@@ -14,6 +14,8 @@ import AddTaskDialog from "./components/AddTaskDialog";
 import LogInModal from "./components/LogInModal";
 import ButtonAppBar from "./components/ButtonAppBar";
 import FilterDialog from "./components/FilterDialog";
+import { useDispatch, useSelector } from "react-redux";
+import { save } from "./features/token/tokenSlice";
 
 function App() {
   const lightTheme = createTheme({
@@ -23,7 +25,8 @@ function App() {
       },
     },
   });
-
+  const dispatch = useDispatch();
+  const test = useSelector((state) => state.token.value);
   const [taskList, setTaskList] = useState([]);
   const [taskDialog, setTaskDialog] = useState(false);
   const [logInDialog, setLogInDialog] = useState(false);
@@ -33,8 +36,6 @@ function App() {
   const [filterDialog, setFilterDialog] = useState(false);
   const [filterText, setFilterText] = useState("");
   const [filteredTaskList, setFilteredTaskList] = useState([]);
-
-  const [token, setToken] = useState("");
 
   const [update, setUpdate] = useState(0);
 
@@ -64,6 +65,10 @@ function App() {
       setTaskList([]);
     }
   };
+
+  useEffect(() => {
+    console.log(test);
+  }, []);
 
   useEffect(() => {
     updateTasks();
@@ -96,69 +101,85 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={lightTheme}>
-      <CssBaseline />
-      <Box sx={{ flexGrow: 1, minWidth: 1 }} key="1">
-        <Grid container spacing={0}>
-          <Grid item xs={12}>
-            <ButtonAppBar
-              token={token}
-              setToken={setToken}
-              update={update}
-              setUpdate={setUpdate}
-              logInDialog={logInDialog}
-              setLogInDialog={setLogInDialog}
-              updateTasks={updateTasks}
-              createUserDialog={createUserDialog}
-              setCreateUserDialog={setCreateUserDialog}
-              currentUser={currentUser}
-              setCurrentUser={setCurrentUser}
-            />
+    <div>
+      <button
+        onClick={() => {
+          console.log(test);
+        }}
+      >
+        log
+      </button>
+      <button
+        onClick={() => {
+          dispatch(save("harry"));
+        }}
+      >
+        change
+      </button>
+      <ThemeProvider theme={lightTheme}>
+        <CssBaseline />
+        <Box sx={{ flexGrow: 1, minWidth: 1 }} key="1">
+          <Grid container spacing={0}>
+            <Grid item xs={12}>
+              <ButtonAppBar
+                token={token}
+                setToken={setToken}
+                update={update}
+                setUpdate={setUpdate}
+                logInDialog={logInDialog}
+                setLogInDialog={setLogInDialog}
+                updateTasks={updateTasks}
+                createUserDialog={createUserDialog}
+                setCreateUserDialog={setCreateUserDialog}
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+              />
+            </Grid>
+            {token.length > 0 ? displayTasks() : ""}
           </Grid>
-          {token.length > 0 ? displayTasks() : ""}
-        </Grid>
-      </Box>
-      <FloatingActionButtons
-        token={token}
-        taskDialog={taskDialog}
-        setTaskDialog={setTaskDialog}
-        logInDialog={logInDialog}
-        setLogInDialog={setLogInDialog}
-        filterDialog={filterDialog}
-        setFilterDialog={setFilterDialog}
-        filterText={filterText}
-        setFilterText={setFilterText}
-      />
-      <AddTaskDialog
-        taskDialog={taskDialog}
-        setTaskDialog={setTaskDialog}
-        update={update}
-        setUpdate={setUpdate}
-        updateTasks={updateTasks}
-        token={token}
-      />
-      <LogInModal
-        token={token}
-        setToken={setToken}
-        update={update}
-        setUpdate={setUpdate}
-        logInDialog={logInDialog}
-        setLogInDialog={setLogInDialog}
-        currentUser={currentUser}
-        setCurrentUser={setCurrentUser}
-      />
-      <CreateUserDialog
-        createUserDialog={createUserDialog}
-        setCreateUserDialog={setCreateUserDialog}
-        updateTasks={updateTasks}
-      />
-      <FilterDialog
-        filterDialog={filterDialog}
-        setFilterDialog={setFilterDialog}
-        filterText={filterText}
-        setFilterText={setFilterText}
-      />
-    </ThemeProvider>
+        </Box>
+        <FloatingActionButtons
+          token={token}
+          taskDialog={taskDialog}
+          setTaskDialog={setTaskDialog}
+          logInDialog={logInDialog}
+          setLogInDialog={setLogInDialog}
+          filterDialog={filterDialog}
+          setFilterDialog={setFilterDialog}
+          filterText={filterText}
+          setFilterText={setFilterText}
+        />
+        <AddTaskDialog
+          taskDialog={taskDialog}
+          setTaskDialog={setTaskDialog}
+          update={update}
+          setUpdate={setUpdate}
+          updateTasks={updateTasks}
+          token={token}
+        />
+        <LogInModal
+          token={token}
+          setToken={setToken}
+          update={update}
+          setUpdate={setUpdate}
+          logInDialog={logInDialog}
+          setLogInDialog={setLogInDialog}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+        />
+        <CreateUserDialog
+          createUserDialog={createUserDialog}
+          setCreateUserDialog={setCreateUserDialog}
+          updateTasks={updateTasks}
+        />
+        <FilterDialog
+          filterDialog={filterDialog}
+          setFilterDialog={setFilterDialog}
+          filterText={filterText}
+          setFilterText={setFilterText}
+        />
+      </ThemeProvider>
+    </div>
   );
 }
 
