@@ -19,6 +19,7 @@ import { save } from "./features/token/tokenSlice";
 import { TransitionGroup } from "react-transition-group";
 import Collapse from "@mui/material/Collapse";
 
+import { motion, AnimatePresence } from "framer-motion";
 function App() {
   const lightTheme = createTheme({
     palette: {
@@ -85,6 +86,12 @@ function App() {
     ));
   };
 
+  const animateTasks = () => {
+    return filteredTaskList.map((task) => (
+      <TaskCard task={task} updateTasks={updateTasks} />
+    ));
+  };
+
   const displayFilteredTasks = () => {
     taskList.filter((task) => {
       return task.name.toLowerCase().includes(filterText.toLowerCase());
@@ -114,8 +121,9 @@ function App() {
               setCurrentUser={setCurrentUser}
             />
           </Grid>
-
-          {token.length > 0 ? displayTasks() : ""}
+          {filteredTaskList.map((task) => (
+            <TaskCard task={task} updateTasks={updateTasks} key={task.id} />
+          ))}
         </Grid>
       </Box>
       <FloatingActionButtons

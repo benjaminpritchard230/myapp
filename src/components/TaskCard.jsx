@@ -14,6 +14,8 @@ import EditDialog from "./EditDialog";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/token/tokenSlice";
+import { motion, AnimatePresence } from "framer-motion";
+
 export default function TaskCard({ task, updateTasks }) {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -74,7 +76,16 @@ export default function TaskCard({ task, updateTasks }) {
       });
   };
   return (
-    <Grid item xs={12} md={6} lg={4}>
+    <Grid
+      item
+      xs={12}
+      md={6}
+      lg={4}
+      component={motion.div}
+      animate={{ rotate: 360 }}
+      transition={{ duration: 1 }}
+      key={task.id}
+    >
       <Item sx={{ m: 0.5 }}>
         <Card sx={{ minHeight: 150 }}>
           <CardContent sx={{ minHeight: 150 }}>
