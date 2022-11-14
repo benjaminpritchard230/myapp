@@ -12,8 +12,9 @@ import Paper from "@mui/material/Paper";
 import TaskCardButtons from "./TaskCardButtons";
 import EditDialog from "./EditDialog";
 import { useState } from "react";
-
-export default function TaskCard({ task, updateTasks, token }) {
+import { useDispatch, useSelector } from "react-redux";
+import { save } from "../features/token/tokenSlice";
+export default function TaskCard({ task, updateTasks }) {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -21,6 +22,7 @@ export default function TaskCard({ task, updateTasks, token }) {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
+  const token = useSelector((state) => state.token.value);
 
   const [editDialog, setEditDialog] = useState(false);
 
@@ -98,7 +100,6 @@ export default function TaskCard({ task, updateTasks, token }) {
         task={task}
         editDialog={editDialog}
         setEditDialog={setEditDialog}
-        token={token}
         updateTasks={updateTasks}
       />
     </Grid>

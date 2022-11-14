@@ -5,8 +5,9 @@ import AddIcon from "@mui/icons-material/Add";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import Tooltip from "@mui/material/Tooltip";
+import { useDispatch, useSelector } from "react-redux";
+import { save } from "../features/token/tokenSlice";
 export default function FloatingActionButtons({
-  token,
   taskDialog,
   setTaskDialog,
   logInDialog,
@@ -24,6 +25,7 @@ export default function FloatingActionButtons({
     left: "auto",
     position: "fixed",
   };
+  const token = useSelector((state) => state.token.value);
 
   return (
     <Box sx={{ "& > :not(style)": { m: 1 } }} style={style}>

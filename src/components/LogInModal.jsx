@@ -9,10 +9,9 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-
+import { useDispatch, useSelector } from "react-redux";
+import { save } from "../features/token/tokenSlice";
 export default function LogInModal({
-  token,
-  setToken,
   update,
   setUpdate,
   logInDialog,
@@ -20,6 +19,8 @@ export default function LogInModal({
   currentUser,
   setCurrentUser,
 }) {
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     console.log(e);
     e.preventDefault();
@@ -33,7 +34,7 @@ export default function LogInModal({
       })
       .then((response) => {
         console.log(response.data);
-        setToken(response.data.token);
+        dispatch(save(response.data.token));
         setUpdate(update + 1);
       })
       .catch((error) => {

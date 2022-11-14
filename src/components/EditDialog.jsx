@@ -8,15 +8,17 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-
+import { useDispatch, useSelector } from "react-redux";
+import { save } from "../features/token/tokenSlice";
 export default function EditDialog({
   task,
-  token,
+
   updateTasks,
   editDialog,
   setEditDialog,
 }) {
   const editTaskUrl = `http://localhost:8000/tasks/${task.id}/`;
+  const token = useSelector((state) => state.token.value);
 
   const handleSubmit = (e) => {
     console.log(e);

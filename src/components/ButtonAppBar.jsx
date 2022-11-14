@@ -6,10 +6,9 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-
+import { useDispatch, useSelector } from "react-redux";
+import { save } from "../features/token/tokenSlice";
 export default function ButtonAppBar({
-  token,
-  setToken,
   update,
   setUpdate,
   logInDialog,
@@ -20,6 +19,9 @@ export default function ButtonAppBar({
   currentUser,
   setCurrentUser,
 }) {
+  const dispatch = useDispatch();
+
+  const token = useSelector((state) => state.token.value);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -35,7 +37,7 @@ export default function ButtonAppBar({
           {token.length > 0 ? (
             <Button
               onClick={() => {
-                setToken("");
+                dispatch(save(""));
                 updateTasks();
                 setCurrentUser("");
               }}
@@ -46,7 +48,7 @@ export default function ButtonAppBar({
           ) : (
             <Button
               onClick={() => {
-                setToken("");
+                dispatch(save(""));
                 setLogInDialog(true);
               }}
               color="inherit"

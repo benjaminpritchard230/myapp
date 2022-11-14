@@ -8,6 +8,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { save } from "../features/token/tokenSlice";
 
 export default function AddTaskDialog({
   taskDialog,
@@ -15,10 +17,9 @@ export default function AddTaskDialog({
   update,
   setUpdate,
   updateTasks,
-  token,
 }) {
   const addTaskUrl = "http://localhost:8000/tasks/";
-
+  const token = useSelector((state) => state.token.value);
   const handleSubmit = (e) => {
     console.log(e);
     e.preventDefault();
