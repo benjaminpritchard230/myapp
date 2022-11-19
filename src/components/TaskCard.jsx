@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/token/tokenSlice";
 import { motion, AnimatePresence } from "framer-motion";
+import { v4 as uuidv4 } from "uuid";
 
 export default function TaskCard({ task, updateTasks }) {
   const Item = styled(Paper)(({ theme }) => ({
@@ -75,6 +76,7 @@ export default function TaskCard({ task, updateTasks }) {
         updateTasks();
       });
   };
+
   return (
     <Grid
       item
@@ -82,8 +84,20 @@ export default function TaskCard({ task, updateTasks }) {
       md={6}
       lg={4}
       component={motion.div}
-      animate={{ rotate: 360 }}
-      transition={{ duration: 1 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{
+        default: {
+          duration: 0.6,
+          ease: [0, 0.71, 0.2, 1.01],
+        },
+        scale: {
+          type: "spring",
+          damping: 5,
+          stiffness: 100,
+          restDelta: 0.001,
+        },
+      }}
       key={task.id}
     >
       <Item sx={{ m: 0.5 }}>

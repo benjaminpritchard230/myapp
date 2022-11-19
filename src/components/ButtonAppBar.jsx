@@ -8,6 +8,10 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/token/tokenSlice";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import Tooltip from "@mui/material/Tooltip";
+
 export default function ButtonAppBar({
   update,
   setUpdate,
@@ -18,6 +22,8 @@ export default function ButtonAppBar({
   setCreateUserDialog,
   currentUser,
   setCurrentUser,
+  theme,
+  setTheme,
 }) {
   const dispatch = useDispatch();
 
@@ -29,22 +35,41 @@ export default function ButtonAppBar({
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Todo App
           </Typography>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {currentUser.length > 0
-              ? `Logged in as: ${currentUser}`
-              : "Log in or create a user to get started"}
-          </Typography>
+
+          {theme === "dark" ? (
+            <Tooltip title="Light mode" placement="left">
+              <IconButton
+                onClick={() => {
+                  setTheme("light");
+                }}
+              >
+                <Brightness7Icon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip title="Dark mode" placement="left">
+              <IconButton
+                onClick={() => {
+                  setTheme("dark");
+                }}
+              >
+                <Brightness4Icon />
+              </IconButton>
+            </Tooltip>
+          )}
           {token.length > 0 ? (
-            <Button
-              onClick={() => {
-                dispatch(save(""));
-                updateTasks();
-                setCurrentUser("");
-              }}
-              color="inherit"
-            >
-              Logout
-            </Button>
+            <Tooltip title={`Logged in as: ${currentUser}`}>
+              <Button
+                onClick={() => {
+                  dispatch(save(""));
+                  updateTasks();
+                  setCurrentUser("");
+                }}
+                color="inherit"
+              >
+                Logout
+              </Button>
+            </Tooltip>
           ) : (
             <Button
               onClick={() => {

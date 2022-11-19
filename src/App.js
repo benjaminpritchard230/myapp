@@ -18,9 +18,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { save } from "./features/token/tokenSlice";
 import { TransitionGroup } from "react-transition-group";
 import Collapse from "@mui/material/Collapse";
+import { v4 as uuidv4 } from "uuid";
 
 import { motion, AnimatePresence } from "framer-motion";
 function App() {
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
   const lightTheme = createTheme({
     palette: {
       primary: {
@@ -39,6 +46,7 @@ function App() {
   const [filterDialog, setFilterDialog] = useState(false);
   const [filterText, setFilterText] = useState("");
   const [filteredTaskList, setFilteredTaskList] = useState([]);
+  const [theme, setTheme] = useState("light");
 
   const [update, setUpdate] = useState(0);
 
@@ -80,31 +88,16 @@ function App() {
     setFilteredTaskList(filtered);
   }, [filterText, taskList]);
 
-  const displayTasks = () => {
-    return filteredTaskList.map((task) => (
-      <TaskCard task={task} updateTasks={updateTasks} />
-    ));
-  };
-
-  const animateTasks = () => {
-    return filteredTaskList.map((task) => (
-      <TaskCard task={task} updateTasks={updateTasks} />
-    ));
-  };
-
   const displayFilteredTasks = () => {
-    taskList.filter((task) => {
-      return task.name.toLowerCase().includes(filterText.toLowerCase());
-    });
-    taskList.map((task) => (
-      <Collapse key={task}>
-        <TaskCard task={task} updateTasks={updateTasks} />
-      </Collapse>
-    ));
+    if (token.length > 0) {
+      return filteredTaskList.map((task) => (
+        <TaskCard task={task} updateTasks={updateTasks} key={task.id} />
+      ));
+    }
   };
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <CssBaseline />
       <Box sx={{ flexGrow: 1, minWidth: 1 }} key="1">
         <Grid container spacing={0}>
@@ -119,11 +112,12 @@ function App() {
               setCreateUserDialog={setCreateUserDialog}
               currentUser={currentUser}
               setCurrentUser={setCurrentUser}
+              theme={theme}
+              setTheme={setTheme}
             />
           </Grid>
-          {filteredTaskList.map((task) => (
-            <TaskCard task={task} updateTasks={updateTasks} key={task.id} />
-          ))}
+
+          {displayFilteredTasks()}
         </Grid>
       </Box>
       <FloatingActionButtons
