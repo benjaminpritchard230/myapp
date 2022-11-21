@@ -16,8 +16,6 @@ export default function FilterDialog({
   filterText,
   setFilterText,
 }) {
-  const addTaskUrl = "http://localhost:8000/tasks/";
-
   const handleSubmit = (e) => {
     console.log(e);
     e.preventDefault();

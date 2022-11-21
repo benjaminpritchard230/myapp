@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/token/tokenSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import { v4 as uuidv4 } from "uuid";
+import { useContext } from "react";
+import { UrlContext } from "../context/UrlContext";
 
 export default function TaskCard({ task, updateTasks }) {
   const Item = styled(Paper)(({ theme }) => ({
@@ -29,9 +31,11 @@ export default function TaskCard({ task, updateTasks }) {
 
   const [editDialog, setEditDialog] = useState(false);
 
-  const editTaskUrl = `http://localhost:8000/tasks/${task.id}/`;
+  const editTaskUrl = `http://localhost:8000/api/tasks/${task.id}/`;
   const taskName = task.name;
   const taskDone = task.done;
+  const urlList = useContext(UrlContext);
+  console.log(urlList.tasks + `${task.id}/`);
 
   const capitalizeString = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -39,7 +43,7 @@ export default function TaskCard({ task, updateTasks }) {
 
   const handleDeleteClick = () => {
     axios
-      .delete(`http://localhost:8000/tasks/${task.id}/`, {
+      .delete(urlList.tasks + `${task.id}/`, {
         headers: {
           Authorization: `token ${token}`,
         },

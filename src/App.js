@@ -21,6 +21,7 @@ import Collapse from "@mui/material/Collapse";
 import { v4 as uuidv4 } from "uuid";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { UrlContext } from "./context/UrlContext";
 function App() {
   const darkTheme = createTheme({
     palette: {
@@ -47,18 +48,18 @@ function App() {
   const [filterText, setFilterText] = useState("");
   const [filteredTaskList, setFilteredTaskList] = useState([]);
   const [theme, setTheme] = useState("light");
-
   const [update, setUpdate] = useState(0);
 
-  // useEffect(() => {
-  //   if(token.length===0){setLogInDialog(true);
-  //   setTaskList([])}
-  // }, [update])
+  const urlList = {
+    tasks: "http://localhost:8000/api/tasks/",
+    register: "http://localhost:8000/api/register/",
+    login: "http://localhost:8000/api/login/",
+  };
 
   const updateTasks = () => {
     if (token.length > 0) {
       axios
-        .get("http://localhost:8000/tasks/", {
+        .get(urlList.tasks, {
           headers: {
             Authorization: `token ${token}`,
           },
@@ -97,66 +98,68 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-      <CssBaseline />
-      <Box sx={{ flexGrow: 1, minWidth: 1 }} key="1">
-        <Grid container spacing={0}>
-          <Grid item xs={12}>
-            <ButtonAppBar
-              update={update}
-              setUpdate={setUpdate}
-              logInDialog={logInDialog}
-              setLogInDialog={setLogInDialog}
-              updateTasks={updateTasks}
-              createUserDialog={createUserDialog}
-              setCreateUserDialog={setCreateUserDialog}
-              currentUser={currentUser}
-              setCurrentUser={setCurrentUser}
-              theme={theme}
-              setTheme={setTheme}
-            />
-          </Grid>
+    <UrlContext.Provider value={urlList}>
+      <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+        <CssBaseline />
+        <Box sx={{ flexGrow: 1, minWidth: 1 }} key="1">
+          <Grid container spacing={0}>
+            <Grid item xs={12}>
+              <ButtonAppBar
+                update={update}
+                setUpdate={setUpdate}
+                logInDialog={logInDialog}
+                setLogInDialog={setLogInDialog}
+                updateTasks={updateTasks}
+                createUserDialog={createUserDialog}
+                setCreateUserDialog={setCreateUserDialog}
+                currentUser={currentUser}
+                setCurrentUser={setCurrentUser}
+                theme={theme}
+                setTheme={setTheme}
+              />
+            </Grid>
 
-          {displayFilteredTasks()}
-        </Grid>
-      </Box>
-      <FloatingActionButtons
-        taskDialog={taskDialog}
-        setTaskDialog={setTaskDialog}
-        logInDialog={logInDialog}
-        setLogInDialog={setLogInDialog}
-        filterDialog={filterDialog}
-        setFilterDialog={setFilterDialog}
-        filterText={filterText}
-        setFilterText={setFilterText}
-      />
-      <AddTaskDialog
-        taskDialog={taskDialog}
-        setTaskDialog={setTaskDialog}
-        update={update}
-        setUpdate={setUpdate}
-        updateTasks={updateTasks}
-      />
-      <LogInModal
-        update={update}
-        setUpdate={setUpdate}
-        logInDialog={logInDialog}
-        setLogInDialog={setLogInDialog}
-        currentUser={currentUser}
-        setCurrentUser={setCurrentUser}
-      />
-      <CreateUserDialog
-        createUserDialog={createUserDialog}
-        setCreateUserDialog={setCreateUserDialog}
-        updateTasks={updateTasks}
-      />
-      <FilterDialog
-        filterDialog={filterDialog}
-        setFilterDialog={setFilterDialog}
-        filterText={filterText}
-        setFilterText={setFilterText}
-      />
-    </ThemeProvider>
+            {displayFilteredTasks()}
+          </Grid>
+        </Box>
+        <FloatingActionButtons
+          taskDialog={taskDialog}
+          setTaskDialog={setTaskDialog}
+          logInDialog={logInDialog}
+          setLogInDialog={setLogInDialog}
+          filterDialog={filterDialog}
+          setFilterDialog={setFilterDialog}
+          filterText={filterText}
+          setFilterText={setFilterText}
+        />
+        <AddTaskDialog
+          taskDialog={taskDialog}
+          setTaskDialog={setTaskDialog}
+          update={update}
+          setUpdate={setUpdate}
+          updateTasks={updateTasks}
+        />
+        <LogInModal
+          update={update}
+          setUpdate={setUpdate}
+          logInDialog={logInDialog}
+          setLogInDialog={setLogInDialog}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+        />
+        <CreateUserDialog
+          createUserDialog={createUserDialog}
+          setCreateUserDialog={setCreateUserDialog}
+          updateTasks={updateTasks}
+        />
+        <FilterDialog
+          filterDialog={filterDialog}
+          setFilterDialog={setFilterDialog}
+          filterText={filterText}
+          setFilterText={setFilterText}
+        />
+      </ThemeProvider>
+    </UrlContext.Provider>
   );
 }
 

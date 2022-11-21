@@ -10,6 +10,8 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/token/tokenSlice";
+import { useContext } from "react";
+import { UrlContext } from "../context/UrlContext";
 
 export default function AddTaskDialog({
   taskDialog,
@@ -18,7 +20,7 @@ export default function AddTaskDialog({
   setUpdate,
   updateTasks,
 }) {
-  const addTaskUrl = "http://localhost:8000/tasks/";
+  const urlList = useContext(UrlContext);
   const token = useSelector((state) => state.token.value);
   const handleSubmit = (e) => {
     console.log(e);
@@ -27,7 +29,7 @@ export default function AddTaskDialog({
     let name = e.target[0].value;
     axios
       .post(
-        addTaskUrl,
+        urlList.tasks,
         { name: name, description: "Hello" },
         {
           headers: {

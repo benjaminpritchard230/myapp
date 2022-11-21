@@ -11,6 +11,8 @@ import { save } from "../features/token/tokenSlice";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Tooltip from "@mui/material/Tooltip";
+import { useContext } from "react";
+import { UrlContext } from "../context/UrlContext";
 
 export default function ButtonAppBar({
   update,
@@ -28,6 +30,8 @@ export default function ButtonAppBar({
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.token.value);
+  const message = useContext(UrlContext);
+  console.log(message);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

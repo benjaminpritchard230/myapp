@@ -10,6 +10,9 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/token/tokenSlice";
+import { useContext } from "react";
+import { UrlContext } from "../context/UrlContext";
+
 export default function EditDialog({
   task,
 
@@ -17,8 +20,8 @@ export default function EditDialog({
   editDialog,
   setEditDialog,
 }) {
-  const editTaskUrl = `http://localhost:8000/tasks/${task.id}/`;
   const token = useSelector((state) => state.token.value);
+  const urlList = useContext(UrlContext);
 
   const handleSubmit = (e) => {
     console.log(e);
@@ -27,7 +30,7 @@ export default function EditDialog({
     let name = e.target[0].value;
     axios
       .put(
-        editTaskUrl,
+        urlList.tasks + `${task.id}/`,
         { name: name, description: "edited" },
         {
           headers: {

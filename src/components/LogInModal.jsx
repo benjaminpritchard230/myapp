@@ -11,6 +11,9 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/token/tokenSlice";
+import { useContext } from "react";
+import { UrlContext } from "../context/UrlContext";
+
 export default function LogInModal({
   update,
   setUpdate,
@@ -20,6 +23,7 @@ export default function LogInModal({
   setCurrentUser,
 }) {
   const dispatch = useDispatch();
+  const urlList = useContext(UrlContext);
 
   const handleSubmit = (e) => {
     console.log(e);
@@ -28,7 +32,7 @@ export default function LogInModal({
     let username = e.target[0].value;
     let password = e.target[1].value;
     axios
-      .post("http://localhost:8000/login_api/", {
+      .post(urlList.login, {
         username: username,
         password: password,
       })

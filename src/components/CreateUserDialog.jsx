@@ -10,19 +10,22 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/token/tokenSlice";
+import { useContext } from "react";
+import { UrlContext } from "../context/UrlContext";
+
 export default function CreateUserDialog({
   createUserDialog,
   setCreateUserDialog,
   updateTasks,
 }) {
-  const createUserUrl = "http://localhost:8000/register/";
+  const urlList = useContext(UrlContext);
   const handleSubmit = (e) => {
     console.log(e);
     e.preventDefault();
     let username = e.target[0].value;
     let password = e.target[1].value;
     axios
-      .post(createUserUrl, { username: username, password: password })
+      .post(urlList.register, { username: username, password: password })
       .then((response) => {
         console.log(response.data);
       })
