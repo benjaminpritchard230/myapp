@@ -5,8 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import Tooltip from "@mui/material/Tooltip";
-import { useDispatch, useSelector } from "react-redux";
-import { save } from "../features/token/tokenSlice";
+import { useSelector } from "react-redux";
 export default function FloatingActionButtons({
   setTaskDialog,
   setLogInDialog,

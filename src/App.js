@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
@@ -14,13 +13,7 @@ import AddTaskDialog from "./components/AddTaskDialog";
 import LogInModal from "./components/LogInModal";
 import ButtonAppBar from "./components/ButtonAppBar";
 import FilterDialog from "./components/FilterDialog";
-import { useDispatch, useSelector } from "react-redux";
-import { save } from "./features/token/tokenSlice";
-import { TransitionGroup } from "react-transition-group";
-import Collapse from "@mui/material/Collapse";
-import { v4 as uuidv4 } from "uuid";
-
-import { motion, AnimatePresence } from "framer-motion";
+import { useSelector } from "react-redux";
 import { UrlContext } from "./context/UrlContext";
 function App() {
   const darkTheme = createTheme({
@@ -36,12 +29,10 @@ function App() {
       },
     },
   });
-  const dispatch = useDispatch();
   const token = useSelector((state) => state.token.value);
   const [taskList, setTaskList] = useState([]);
   const [taskDialog, setTaskDialog] = useState(false);
   const [logInDialog, setLogInDialog] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [createUserDialog, setCreateUserDialog] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
   const [filterDialog, setFilterDialog] = useState(false);
@@ -80,6 +71,7 @@ function App() {
 
   useEffect(() => {
     updateTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   useEffect(() => {
