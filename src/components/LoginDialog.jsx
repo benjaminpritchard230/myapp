@@ -12,7 +12,7 @@ import { save } from "../features/token/tokenSlice";
 import { useContext } from "react";
 import { UrlContext } from "../context/UrlContext";
 
-export default function LogInModal({
+export default function LoginDialog({
   update,
   setUpdate,
   logInDialog,

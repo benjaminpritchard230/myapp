@@ -10,11 +10,12 @@ import TaskCard from "./components/TaskCard";
 import FloatingActionButtons from "./components/FloatingActionButtons";
 import axios from "axios";
 import AddTaskDialog from "./components/AddTaskDialog";
-import LogInModal from "./components/LogInModal";
+import LoginDialog from "./components/LoginDialog";
 import ButtonAppBar from "./components/ButtonAppBar";
 import FilterDialog from "./components/FilterDialog";
 import { useSelector } from "react-redux";
 import { UrlContext } from "./context/UrlContext";
+
 function App() {
   const darkTheme = createTheme({
     palette: {
@@ -123,7 +124,7 @@ function App() {
           setTaskDialog={setTaskDialog}
           updateTasks={updateTasks}
         />
-        <LogInModal
+        <LoginDialog
           update={update}
           setUpdate={setUpdate}
           logInDialog={logInDialog}
