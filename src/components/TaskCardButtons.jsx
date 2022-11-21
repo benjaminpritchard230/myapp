@@ -11,7 +11,6 @@ import { save } from "../features/token/tokenSlice";
 const TaskCardButtons = ({
   task,
   handleDeleteClick,
-  editDialog,
   setEditDialog,
   handleDoneClick,
 }) => {

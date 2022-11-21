@@ -19,7 +19,6 @@ export default function LogInModal({
   setUpdate,
   logInDialog,
   setLogInDialog,
-  currentUser,
   setCurrentUser,
 }) {
   const dispatch = useDispatch();

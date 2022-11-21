@@ -105,9 +105,6 @@ function App() {
           <Grid container spacing={0}>
             <Grid item xs={12}>
               <ButtonAppBar
-                update={update}
-                setUpdate={setUpdate}
-                logInDialog={logInDialog}
                 setLogInDialog={setLogInDialog}
                 updateTasks={updateTasks}
                 createUserDialog={createUserDialog}
@@ -123,11 +120,8 @@ function App() {
           </Grid>
         </Box>
         <FloatingActionButtons
-          taskDialog={taskDialog}
           setTaskDialog={setTaskDialog}
-          logInDialog={logInDialog}
           setLogInDialog={setLogInDialog}
-          filterDialog={filterDialog}
           setFilterDialog={setFilterDialog}
           filterText={filterText}
           setFilterText={setFilterText}
@@ -135,8 +129,6 @@ function App() {
         <AddTaskDialog
           taskDialog={taskDialog}
           setTaskDialog={setTaskDialog}
-          update={update}
-          setUpdate={setUpdate}
           updateTasks={updateTasks}
         />
         <LogInModal
@@ -155,7 +147,6 @@ function App() {
         <FilterDialog
           filterDialog={filterDialog}
           setFilterDialog={setFilterDialog}
-          filterText={filterText}
           setFilterText={setFilterText}
         />
       </ThemeProvider>

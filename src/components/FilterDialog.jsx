@@ -13,7 +13,6 @@ import { save } from "../features/token/tokenSlice";
 export default function FilterDialog({
   filterDialog,
   setFilterDialog,
-  filterText,
   setFilterText,
 }) {
   const handleSubmit = (e) => {

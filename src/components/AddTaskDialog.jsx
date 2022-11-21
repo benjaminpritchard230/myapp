@@ -16,8 +16,6 @@ import { UrlContext } from "../context/UrlContext";
 export default function AddTaskDialog({
   taskDialog,
   setTaskDialog,
-  update,
-  setUpdate,
   updateTasks,
 }) {
   const urlList = useContext(UrlContext);

@@ -8,11 +8,8 @@ import Tooltip from "@mui/material/Tooltip";
 import { useDispatch, useSelector } from "react-redux";
 import { save } from "../features/token/tokenSlice";
 export default function FloatingActionButtons({
-  taskDialog,
   setTaskDialog,
-  logInDialog,
   setLogInDialog,
-  filterDialog,
   setFilterDialog,
   filterText,
   setFilterText,

@@ -15,7 +15,6 @@ import { UrlContext } from "../context/UrlContext";
 
 export default function EditDialog({
   task,
-
   updateTasks,
   editDialog,
   setEditDialog,

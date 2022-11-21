@@ -31,7 +31,6 @@ export default function TaskCard({ task, updateTasks }) {
 
   const [editDialog, setEditDialog] = useState(false);
 
-  const editTaskUrl = `http://localhost:8000/api/tasks/${task.id}/`;
   const taskName = task.name;
   const taskDone = task.done;
   const urlList = useContext(UrlContext);
@@ -62,7 +61,7 @@ export default function TaskCard({ task, updateTasks }) {
   const handleDoneClick = () => {
     axios
       .put(
-        editTaskUrl,
+        urlList.tasks + `${task.id}/`,
         { name: taskName, done: !taskDone },
         {
           headers: {
@@ -116,10 +115,9 @@ export default function TaskCard({ task, updateTasks }) {
           </CardContent>
           <CardActions>
             <TaskCardButtons
-              handleDeleteClick={handleDeleteClick}
-              editDialog={editDialog}
-              setEditDialog={setEditDialog}
               task={task}
+              handleDeleteClick={handleDeleteClick}
+              setEditDialog={setEditDialog}
               handleDoneClick={handleDoneClick}
             />
           </CardActions>
@@ -127,9 +125,9 @@ export default function TaskCard({ task, updateTasks }) {
       </Item>
       <EditDialog
         task={task}
+        updateTasks={updateTasks}
         editDialog={editDialog}
         setEditDialog={setEditDialog}
-        updateTasks={updateTasks}
       />
     </Grid>
   );
