@@ -10,6 +10,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useContext } from "react";
 import { UrlContext } from "../context/UrlContext";
+import { Snackbar } from "@mui/material";
+import { useState } from "react";
 
 export default function AddTaskDialog({
   taskDialog,
@@ -18,6 +20,8 @@ export default function AddTaskDialog({
 }) {
   const urlList = useContext(UrlContext);
   const token = useSelector((state) => state.token.value);
+  const [open, setOpen] = useState(false);
+
   const handleSubmit = (e) => {
     console.log(e);
     e.preventDefault();
@@ -41,7 +45,11 @@ export default function AddTaskDialog({
       })
       .finally(() => {
         updateTasks();
+        setOpen(true);
       });
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <div>
@@ -72,6 +80,13 @@ export default function AddTaskDialog({
           </DialogActions>
         </form>
       </Dialog>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message="Task created"
+        sx={{ bottom: { xs: 90, sm: 0 } }}
+      />
     </div>
   );
 }

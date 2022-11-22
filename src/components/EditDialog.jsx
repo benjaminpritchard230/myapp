@@ -8,8 +8,9 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UrlContext } from "../context/UrlContext";
+import { Snackbar } from "@mui/material";
 
 export default function EditDialog({
   task,
@@ -19,6 +20,7 @@ export default function EditDialog({
 }) {
   const token = useSelector((state) => state.token.value);
   const urlList = useContext(UrlContext);
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = (e) => {
     console.log(e);
@@ -43,7 +45,11 @@ export default function EditDialog({
       })
       .finally(() => {
         updateTasks();
+        setOpen(true);
       });
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <div>
@@ -74,6 +80,12 @@ export default function EditDialog({
           </DialogActions>
         </form>
       </Dialog>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message="Task edited"
+      />
     </div>
   );
 }

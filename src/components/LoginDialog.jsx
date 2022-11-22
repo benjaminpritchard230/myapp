@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { save } from "../features/token/tokenSlice";
 import { useContext } from "react";
 import { UrlContext } from "../context/UrlContext";
+import { Snackbar } from "@mui/material";
 
 export default function LoginDialog({
   update,
@@ -21,6 +22,10 @@ export default function LoginDialog({
 }) {
   const dispatch = useDispatch();
   const urlList = useContext(UrlContext);
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleSubmit = (e) => {
     console.log(e);
@@ -43,6 +48,7 @@ export default function LoginDialog({
       })
       .finally(() => {
         setCurrentUser(username);
+        setOpen(true);
       });
   };
 
@@ -84,6 +90,13 @@ export default function LoginDialog({
           </DialogActions>
         </form>
       </Dialog>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message="Logged in succesfully!"
+        sx={{ bottom: { xs: 90, sm: 0 } }}
+      />
     </div>
   );
 }

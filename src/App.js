@@ -140,6 +140,7 @@ function App() {
         <FilterDialog
           filterDialog={filterDialog}
           setFilterDialog={setFilterDialog}
+          filterText={filterText}
           setFilterText={setFilterText}
         />
       </ThemeProvider>
