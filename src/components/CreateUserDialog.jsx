@@ -6,19 +6,22 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { save } from "../features/token/tokenSlice";
 import { useContext } from "react";
 import { UrlContext } from "../context/UrlContext";
+import { useState } from "react";
+import { Snackbar } from "@mui/material";
 
 export default function CreateUserDialog({
   createUserDialog,
   setCreateUserDialog,
   updateTasks,
 }) {
+  const [open, setOpen] = useState(false);
   const urlList = useContext(UrlContext);
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleSubmit = (e) => {
     console.log(e);
     e.preventDefault();
@@ -35,6 +38,7 @@ export default function CreateUserDialog({
       .finally(() => {
         updateTasks();
         setCreateUserDialog(false);
+        setOpen(true);
       });
   };
   return (
@@ -75,6 +79,13 @@ export default function CreateUserDialog({
           </DialogActions>
         </form>
       </Dialog>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message="New user created"
+        sx={{ bottom: { xs: 90, sm: 0 } }}
+      />
     </div>
   );
 }

@@ -12,6 +12,8 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import Tooltip from "@mui/material/Tooltip";
 import { useContext } from "react";
 import { UrlContext } from "../context/UrlContext";
+import { useState } from "react";
+import { Snackbar } from "@mui/material";
 
 export default function ButtonAppBar({
   setLogInDialog,
@@ -23,10 +25,27 @@ export default function ButtonAppBar({
   setTheme,
 }) {
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
   const token = useSelector((state) => state.token.value);
   const message = useContext(UrlContext);
   console.log(message);
+
+  const handleLogoutClick = () => {
+    dispatch(save(""));
+    updateTasks();
+    setCurrentUser("");
+    setOpen(true);
+  };
+
+  const handleLoginClick = () => {
+    dispatch(save(""));
+    setLogInDialog(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -60,9 +79,7 @@ export default function ButtonAppBar({
             <Tooltip title={`Logged in as: ${currentUser}`}>
               <Button
                 onClick={() => {
-                  dispatch(save(""));
-                  updateTasks();
-                  setCurrentUser("");
+                  handleLogoutClick();
                 }}
                 color="inherit"
               >
@@ -72,8 +89,7 @@ export default function ButtonAppBar({
           ) : (
             <Button
               onClick={() => {
-                dispatch(save(""));
-                setLogInDialog(true);
+                handleLoginClick();
               }}
               color="inherit"
             >
@@ -94,6 +110,13 @@ export default function ButtonAppBar({
           )}
         </Toolbar>
       </AppBar>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message="Logged out"
+        sx={{ bottom: { xs: 90, sm: 0 } }}
+      />
     </Box>
   );
 }
